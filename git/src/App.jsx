@@ -17,7 +17,7 @@ export default function App() {
   const handleInfo = async() => {
     try {
       const response = await axios.get('https://jsonplaceholder.typicode.com/posts?page=');
-      const data = response.then((res) => setData(res.title));
+      setData(response.data);
       setLoading(false);
     }catch(err) {
       console.log("Error encountered", err);
@@ -32,11 +32,15 @@ export default function App() {
       <p>{count}</p>
       <button onClick={decCount}>-</button>
       <button onClick={handleInfo}>Show Information</button>
-      {data.map((ele) => {
-        return (
-          <li key={ele.id}>{ele.title}</li>
-        )
-      })}
+
+      {loading && <p>Loading...</p>}
+      <ul>
+        {data.map((ele) => {
+          return (
+            <li key={ele.id}>{ele.title}</li>
+          )
+        })}
+      </ul>
     </div>
   )
 }
